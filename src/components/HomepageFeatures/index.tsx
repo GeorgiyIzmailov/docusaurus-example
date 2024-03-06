@@ -1,6 +1,7 @@
-import clsx from 'clsx';
-import Heading from '@theme/Heading';
-import styles from './styles.module.css';
+import clsx from "clsx";
+import Heading from "@theme/Heading";
+import styles from "./styles.module.css";
+import { shouldShowAIChat } from "@inkeep/docusaurus";
 
 type FeatureItem = {
   title: string;
@@ -56,9 +57,27 @@ function Feature({title, Svg, description}: FeatureItem) {
 }
 
 export default function HomepageFeatures(): JSX.Element {
+  let currentAIChatStatus = localStorage.getItem("shouldShowAIChat");
+  const buttonStatus = !(currentAIChatStatus === "true") ? "Hide" : "Show";
+
+  const handleClickButton = () => {
+    shouldShowAIChat();
+  };
+
   return (
     <section className={styles.features}>
-      <div className="container">
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <button className={styles.button} onClick={handleClickButton}>
+          {buttonStatus} AI Chat
+        </button>
         <div className="row">
           {FeatureList.map((props, idx) => (
             <Feature key={idx} {...props} />
